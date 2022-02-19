@@ -1,1 +1,1 @@
-There are two versions of this script. The "mouse" version just adds mouse controls and a few options. The "mouseplus" version adds mouse controls and analog controls using a UDP server. Currently this is not available, so just use the "mouse" version.
+Use Snes9x rerecording 1.51 v7.1 and drag the .lua file onto the emulator. There are some options you can edit at the top of the script.
