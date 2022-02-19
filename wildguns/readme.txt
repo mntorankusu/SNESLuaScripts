@@ -1,0 +1,1 @@
+There are two versions of this script. The "mouse" version just adds mouse controls and a few options. The "mouseplus" version adds mouse controls and analog controls using a UDP server. Currently this is not available, so just use the "mouse" version.
