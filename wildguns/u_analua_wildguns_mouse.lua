@@ -98,7 +98,7 @@ if EasySkipToStageSelect then
 	ThatInfo2 = ThatInfo2.."EasyStageSelect  "
 end
 
-if EasySkipToStageSelect then
+if EasySkipToFinalBoss then
 	ThatInfo2 = ThatInfo2.."EasySkipToBoss"
 end
 
