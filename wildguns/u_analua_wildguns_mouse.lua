@@ -13,9 +13,10 @@ SkipNatsumeLogo = false --if true, skip the natsume logo and go straight to the 
 EasyLasso = true --if true, hold the middle mouse button to ready the lasso
 EasySkipToStageSelect = true --if true, hold L and press Start on the character select screen to skip the intro stage
 --normally, you hold select and press AAAABBBBABABABAB to accomplish this
-EasySkipToFinalBoss = true --if true, press L on the level select screen to skip to the final boss
+EasySkipToFinalBoss = false --if true, press L on the level select screen to skip to the final boss
 --I also discovered that the same cheat code allows you to skip to the final boss from the level select. this seems to be new information?
-
+DebugInfo = false --if true, will show some info on the top left of the screen
+TitleScreenInfo = true --if true, will show some info on the title screen
 
 xcursoroffset = -2
 ycursoroffset = -2
@@ -72,7 +73,34 @@ p1_lasso = "middleclick"
 screenchecka = 0
 gui.opacity(0.5)
 print("Mouse Control for Wild Guns by mntorankusu")
-print("Use the arrow keys to adjust the X and Y offset until the crosshair position matches your mouse. This is likely to change if you resize the emulator window.")
+print("If necessary, hold Shift and use the arrow keys to adjust the X and Y offset until the crosshair position matches your mouse. This may change if you resize the emulator window.")
+
+if EnableMouseAiming then
+	ThatInfo1 = "WildGuns Mouse Script Feb2022 Edition"
+else
+	ThatInfo1 = "WildGuns Script Feb2022 Edition"
+end
+
+ThatInfo2 = ""
+if EnforceHardMode then
+	ThatInfo2 = ThatInfo2.."HardMode  "
+end
+
+if SkipNatsumeLogo then
+	ThatInfo2 = ThatInfo2.."SkipLogo  "
+end
+
+if EasyLasso then
+	ThatInfo2 = ThatInfo2.."EasyLasso  "
+end
+
+if EasySkipToStageSelect then
+	ThatInfo2 = ThatInfo2.."EasyStageSelect  "
+end
+
+if EasySkipToStageSelect then
+	ThatInfo2 = ThatInfo2.."EasySkipToBoss"
+end
 
 function mousecontrol()
 	
@@ -89,11 +117,12 @@ function mousecontrol()
 		screenchecka = screenchecka + 0.1
 	end
 	
-	print(string.format("X: %i", keyinput.xmouse))
-	print(string.format("Y: %i", keyinput.ymouse))
-	
-	gui.text(2,1, string.format("X: %i - Y: %i", keyinput.xmouse, keyinput.ymouse))
-	gui.text(2,8, string.format("Screen: %i", currentscreen))
+	--print(string.format("X: %i", keyinput.xmouse))
+	--print(string.format("Y: %i", keyinput.ymouse))
+	if DebugInfo then
+		gui.text(2,1, string.format("X: %i - Y: %i", keyinput.xmouse, keyinput.ymouse))
+		gui.text(2,8, string.format("Screen: %i", currentscreen))
+	end
 	
 	if (MouseLag == 0) then
 		p1_x = keyinput.xmouse+xscreenoffset-xcursoroffset
@@ -108,9 +137,10 @@ function mousecontrol()
 		p1_x = xmouselag[1]
 		p1_y = ymouselag[1]
 	end
-	
-	gui.line(p1_x-xscreenoffset-5, p1_y-2, p1_x-xscreenoffset+1, p1_y-2, 999999)
-	gui.line(p1_x-xscreenoffset-2, p1_y-5, p1_x-xscreenoffset-2, p1_y+1, 999999)
+	if DebugInfo then
+		gui.line(p1_x-xscreenoffset-5, p1_y-2, p1_x-xscreenoffset+1, p1_y-2, 999999)
+		gui.line(p1_x-xscreenoffset-2, p1_y-5, p1_x-xscreenoffset-2, p1_y+1, 999999)
+	end
 	
 	if (currentscreen == screen_ingame) then
 		
@@ -175,21 +205,27 @@ function mousecontrol()
 		if input.get()[p1_primary] then
 			output.start = true
 		end
+		
+		if TitleScreenInfo then
+			gui.text(2,2, ThatInfo1)
+			gui.text(2,9, ThatInfo2)
+		end
 	end
-	
-	if input.get().left then
-			xcursoroffset = xcursoroffset+0.25
-			print(string.format("increase offset to %i", xcursoroffset))
-		elseif input.get().right then
-			xcursoroffset = xcursoroffset-0.25
-			print(string.format("decrease offset to %i", xcursoroffset))
-		elseif input.get().up then
-			ycursoroffset = ycursoroffset+0.25
-			print(string.format("increase y offset to %i", ycursoroffset))
-		elseif input.get().down then
-			ycursoroffset = ycursoroffset-0.25
-			print(string.format("decrease y offset to %i", ycursoroffset))
-		end 
+	if input.get().shift then
+		if input.get().left then
+				xcursoroffset = xcursoroffset+0.25
+				print(string.format("increase offset to %i", xcursoroffset))
+			elseif input.get().right then
+				xcursoroffset = xcursoroffset-0.25
+				print(string.format("decrease offset to %i", xcursoroffset))
+			elseif input.get().up then
+				ycursoroffset = ycursoroffset+0.25
+				print(string.format("increase y offset to %i", ycursoroffset))
+			elseif input.get().down then
+				ycursoroffset = ycursoroffset-0.25
+				print(string.format("decrease y offset to %i", ycursoroffset))
+		end
+	end	
 	
 	joypad.set(1, output)
 end
@@ -225,8 +261,6 @@ end
 
 memory.registerwrite(0x7E0000, gamecurrentscreen)
 
-memory.registerwrite(0x7E1609, 2, xcursor_set)
-memory.registerwrite(0x7E1709, 1, ycursor_set)
 
 memory.registerread(0x7E1609, 2, xcursor_set)
 memory.registerread(0x7E1709, 1, ycursor_set)
