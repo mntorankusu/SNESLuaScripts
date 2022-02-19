@@ -1,7 +1,7 @@
 # SNESLuaScripts
 Lua scripts to add modern controls to SNES games. Currently only Wild Guns.
 
-I've only tested these with whatever the most-recent version of SNES9X was 7 years ago.
+These are being tested with Snes9x rerecording 1.51 v7.1. It is unlikely that they will work in any other emulator.
 
 This is a project that I originally started to add analog controls to old racing games. I wanted to play them with a steering wheel. Then I got sidetracked and started adding mouse controls to old shooting games. The analog controls for racing games thing was hit-or-miss, but mouse control was a pretty great success. It's especially nice to have now because you can use it with things like the Sinden Light Gun and Oculus Quest 2 (using Virtual Desktop), which didn't exist when I made this script. 
 
