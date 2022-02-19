@@ -71,7 +71,7 @@ p1_lasso = "middleclick"
 
 screenchecka = 0
 gui.opacity(0.5)
-print("Mouse Control for Wild Guns by mntorankusu - AnaLua project")
+print("Mouse Control for Wild Guns by mntorankusu")
 print("Use the arrow keys to adjust the X and Y offset until the crosshair position matches your mouse. This is likely to change if you resize the emulator window.")
 
 function mousecontrol()
