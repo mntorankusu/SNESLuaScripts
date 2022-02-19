@@ -17,6 +17,8 @@ EasySkipToFinalBoss = false --if true, press L on the level select screen to ski
 --I also discovered that the same cheat code allows you to skip to the final boss from the level select. this seems to be new information?
 DebugInfo = false --if true, will show some info on the top left of the screen
 TitleScreenInfo = true --if true, will show some info on the title screen
+DisableCrosshair = false --if true, the crosshair will be disabled in-game. it's kind of a brute force way of disabling it, so it may cause some graphical glitches.
+DrawMinimalCrosshair = false --if true, a single pixel will be drawn where you're aiming.
 
 xcursoroffset = -2
 ycursoroffset = -2
@@ -143,7 +145,13 @@ function mousecontrol()
 	end
 	
 	if (currentscreen == screen_ingame) then
+		if DisableCrosshair then
+			disable_crosshair()
+		end
 		
+		if DrawMinimalCrosshair then
+			gui.pixel(keyinput.xmouse, keyinput.ymouse, "#000000")
+		end
 		if input.get()[p1_primary] then
 			output.Y = true
 		end
@@ -156,6 +164,8 @@ function mousecontrol()
 			output.Y = switch
 			switch = not switch
 		end
+		
+		memory.writebyte(0x7e0280, 0)
 
 	end
 	
@@ -245,6 +255,12 @@ function ycursor_set()
 	if (screen_ingame) then memory.writebyte(0x7E1709, p1_y) end
 end
 
+dch = 0x7e1308 --this is the graphic for the crosshair.
+
+function disable_crosshair()
+	memory.writeword(dch, 0)
+end
+
 function gamecurrentscreen()
 	currentscreen = memory.readbyte(0x7E0000)
 	if (SkipNatsumeLogo and currentscreen == screen_natsume) then
@@ -260,7 +276,6 @@ if (EnforceHardMode) then
 end
 
 memory.registerwrite(0x7E0000, gamecurrentscreen)
-
 
 memory.registerread(0x7E1609, 2, xcursor_set)
 memory.registerread(0x7E1709, 1, ycursor_set)
