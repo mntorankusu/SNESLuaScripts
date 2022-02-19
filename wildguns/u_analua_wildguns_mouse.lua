@@ -94,7 +94,6 @@ function mousecontrol()
 	
 	gui.text(2,1, string.format("X: %i - Y: %i", keyinput.xmouse, keyinput.ymouse))
 	gui.text(2,8, string.format("Screen: %i", currentscreen))
-	gui.text(2,216, "Wild Guns with Mouse Aiming - AnaLua project Lua script")
 	
 	if (MouseLag == 0) then
 		p1_x = keyinput.xmouse+xscreenoffset-xcursoroffset
