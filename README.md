@@ -8,5 +8,3 @@ This is a project that I originally started to add analog controls to old racing
 There's this whole UDP server thing that allows you to use an Xinput controller to get analog controller data into the script, which I haven't released yet. It was a poorly-made proprietary thing that I never really got into a good state. I would rather get it working with the CemuHook standard UDP thing that everyone is using now.
 
 These things were all secretly in a public repository on GitHub for a long time, though I never told anyone, and eventually completely forgot about it myself. People kept asking me to release it but I thought I needed to search my old backups and didn't feel like doing it. Oops.
-
-I made a patreon for this project here if you want to give me a dollar: https://www.patreon.com/mntorankusu
